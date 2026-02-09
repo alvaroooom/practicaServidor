@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${practica.id == null} ? 'Nueva Práctica' : 'Editar Práctica'"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 th:text="${practica.id == null} ? 'Nueva Práctica' : 'Editar Práctica'" class="mb-4"></h1>
+
+    <form th:action="@{/practicas/guardar}" th:object="${practica}" method="post" class="needs-validation" novalidate>
+        <input type="hidden" th:field="*{id}"/>
+
+        <div class="mb-3">
+            <label class="form-label">Título:</label>
+            <input type="text" th:field="*{titulo}" class="form-control" required>
+            <div class="invalid-feedback">El título es obligatorio.</div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Descripción:</label>
+            <textarea th:field="*{descripcion}" class="form-control" rows="3"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Fecha Inicio:</label>
+            <input type="date" th:field="*{fechaInicio}" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Fecha Fin:</label>
+            <input type="date" th:field="*{fechaFin}" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Alumno:</label>
+            <select name="alumnoId" class="form-select" required>
+                <option th:each="alumno : ${alumnos}" th:value="${alumno.id}"
+                        th:text="${alumno.nombre + ' ' + alumno.apellidos}"
+                        th:selected="${practica.alumno != null} ? ${alumno.id} == ${practica.alumno.id} : false">
+                </option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Empresa:</label>
+            <select name="empresaId" class="form-select" required>
+                <option th:each="empresa : ${empresas}" th:value="${empresa.id}"
+                        th:text="${empresa.nombre}"
+                        th:selected="${practica.empresa != null} ? ${empresa.id} == ${practica.empresa.id} : false">
+                </option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a th:href="@{/practicas}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Ejemplo simple de validación de Bootstrap
+(() => {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+        }, false)
+    })
+})()
+</script>
+</body>
+</html>

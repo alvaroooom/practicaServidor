@@ -1,5 +1,6 @@
 package com.proyecto.practicaAlvaro.repositorio;
 
+import com.proyecto.practicaAlvaro.modelo.Alumno;
 import com.proyecto.practicaAlvaro.modelo.Empresa;
 import com.proyecto.practicaAlvaro.modelo.Practica;
 
@@ -11,5 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PracticaRepositorio extends JpaRepository<Practica, Long> {
 	List<Practica> findByEmpresa(Empresa empresa);
+	List<Practica> findByAlumno(Alumno alumno);
 }
 

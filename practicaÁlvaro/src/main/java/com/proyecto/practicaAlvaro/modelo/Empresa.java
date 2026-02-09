@@ -15,10 +15,10 @@ public class Empresa {
     private String nombre;
 
     @Column
-    private String direccion;
+    private String nombreTutor;
 
     @Column
-    private String telefono;
+    private String emailTutor;
 
     // relacion con las practicas
     @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -27,10 +27,10 @@ public class Empresa {
     // constructor
     public Empresa() {}
     
-    public Empresa(String nombre, String direccion, String telefono) {
+    public Empresa(String nombre, String nombreTutor, String emailTutor) {
         this.nombre = nombre;
-        this.direccion = direccion;
-        this.telefono = telefono;
+        this.nombreTutor = nombreTutor;
+        this.emailTutor = emailTutor;
     }
 
     public Long getId() { 
@@ -49,20 +49,20 @@ public class Empresa {
     	this.nombre = nombre; 
     }
 
-    public String getDireccion() { 
-    	return direccion; 
+    public String getNombreTutor() { 
+    	return nombreTutor; 
     }
     
-    public void setDireccion(String direccion) { 
-    	this.direccion = direccion; 
+    public void setNombreTutor(String nombreTutor) { 
+    	this.nombreTutor = nombreTutor; 
     }
 
-    public String getTelefono() { 
-    	return telefono; 
+    public String getEmailTutor() { 
+    	return emailTutor; 
     }
     
-    public void setTelefono(String telefono) { 
-    	this.telefono = telefono; 
+    public void setEmailTutor(String emailTutor) { 
+    	this.emailTutor = emailTutor; 
     }
 
     public List<Practica> getPracticas() { 

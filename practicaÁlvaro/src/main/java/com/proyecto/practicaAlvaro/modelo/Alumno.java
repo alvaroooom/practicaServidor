@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "alumnos")
@@ -35,6 +36,10 @@ public class Alumno {
     @ManyToOne
     @JoinColumn(name = "curso_id")
     private Curso curso;
+
+    // relación con prácticas
+    @OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Practica> practicas;
 
     public Long getId() { 
     	return id; 
@@ -79,8 +84,15 @@ public class Alumno {
     public Curso getCurso() { 
     	return curso; 
     }
-    
     public void setCurso(Curso curso) { 
     	this.curso = curso; 
+    }
+
+    public List<Practica> getPracticas() { 
+    	return practicas; 
+    }
+    
+    public void setPracticas(List<Practica> practicas) { 
+    	this.practicas = practicas; 
     }
 }

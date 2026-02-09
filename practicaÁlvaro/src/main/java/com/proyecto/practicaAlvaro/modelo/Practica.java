@@ -23,20 +23,25 @@ public class Practica {
     @Column
     private LocalDate fechaFin;
 
-    // relacion n:1 con empresa
+    // relación n:1 con empresa
     @ManyToOne
     @JoinColumn(name = "empresa_id", nullable = false)
     private Empresa empresa;
 
-    // constructores
+    // relación n:1 con alumno
+    @ManyToOne
+    @JoinColumn(name = "alumno_id", nullable = false)
+    private Alumno alumno;
+
     public Practica() {}
 
-    public Practica(String titulo, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, Empresa empresa) {
+    public Practica(String titulo, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, Empresa empresa, Alumno alumno) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.empresa = empresa;
+        this.alumno = alumno;
     }
 
     public Long getId() { 
@@ -86,5 +91,12 @@ public class Practica {
     public void setEmpresa(Empresa empresa) { 
     	this.empresa = empresa; 
     }
-}
 
+    public Alumno getAlumno() { 
+    	return alumno; 
+    }
+    
+    public void setAlumno(Alumno alumno) { 
+    	this.alumno = alumno; 
+    }
+}

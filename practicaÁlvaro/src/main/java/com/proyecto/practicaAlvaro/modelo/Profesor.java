@@ -1,11 +1,12 @@
 package com.proyecto.practicaAlvaro.modelo;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import java.util.Set;
+
+import com.proyecto.practicaAlvaro.enums.Rol;
 
 @Entity
 @Table(name = "profesores")
@@ -31,8 +32,8 @@ public class Profesor {
     @NotBlank(message = "La contraseña es obligatoria")
     private String password;
 
-    // si es true es de la directiva, si es false es profesor normal
-    private boolean directiva;
+    @Enumerated(EnumType.STRING)
+    private Rol rol = Rol.NORMAL;
 
     @OneToMany(mappedBy = "profesor", cascade = CascadeType.ALL)
     private Set<Curso> cursos;
@@ -77,12 +78,16 @@ public class Profesor {
     	this.password = password; 
     }
 
-    public boolean isDirectiva() { 
-    	return directiva; 
+    public boolean esDirectivo() {
+        return this.rol == Rol.DIRECTIVO;
     }
     
-    public void setDirectiva(boolean directiva) { 
-    	this.directiva = directiva; 
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
     public Set<Curso> getCursos() { 

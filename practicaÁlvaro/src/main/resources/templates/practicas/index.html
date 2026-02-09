@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Prácticas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Listado de Prácticas</h1>
+
+    <a th:href="@{/practicas/nuevo}" class="btn btn-primary mb-3">Nueva Práctica</a>
+
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Título</th>
+                <th>Alumno</th>
+                <th>Empresa</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="practica : ${practicas}">
+                <td th:text="${practica.titulo}"></td>
+                <td th:text="${practica.alumno.nombre + ' ' + practica.alumno.apellidos}"></td>
+                <td th:text="${practica.empresa.nombre}"></td>
+                <td th:text="${practica.fechaInicio}"></td>
+                <td th:text="${practica.fechaFin}"></td>
+                <td>
+                    <a th:href="@{'/practicas/editar/' + ${practica.id}}" class="btn btn-sm btn-warning">Editar</a>
+                    <a th:href="@{'/practicas/eliminar/' + ${practica.id}}" 
+                       class="btn btn-sm btn-danger" 
+                       onclick="return confirm('¿Seguro que quieres eliminar esta práctica?');">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
