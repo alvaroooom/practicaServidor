@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+    <div th:fragment="header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+            <div class="container">
+                <a class="navbar-brand" th:href="@{/}" th:text="#{app.titulo}">Gestión Formación</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/}" th:text="#{menu.inicio}">Inicio</a>
+                        </li>
+                        <li class="nav-item" th:if="${esDirectivo}">
+                            <a class="nav-link" th:href="@{/profesores}" th:text="#{menu.profesores}">Profesores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/alumnos}" th:text="#{menu.alumnos}">Alumnos</a>
+                        </li>
+                        <li class="nav-item" th:if="${esDirectivo}">
+                            <a class="nav-link" th:href="@{/cursos}" th:text="#{menu.cursos}">Cursos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/empresas}" th:text="#{menu.empresas}">Empresas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/practicas}" th:text="#{menu.practicas}">Prácticas</a>
+                        </li>
+                        <li class="nav-item" th:if="${esDirectivo}">
+                            <a class="nav-link" th:href="@{/estadisticas}" th:text="#{menu.estadisticas}">Estadísticas</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="#{menu.idioma}">
+                                Idioma
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="?lang=es" th:text="#{menu.espanol}">Español</a></li>
+                                <li><a class="dropdown-item" href="?lang=en" th:text="#{menu.ingles}">Inglés</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a class="nav-link" th:href="@{/logout}" th:text="#{menu.logout}">Cerrar Sesion</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</body>
+</html>

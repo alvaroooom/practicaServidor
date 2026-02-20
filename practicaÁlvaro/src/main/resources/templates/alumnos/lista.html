@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumnos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+    <div th:replace="~{componentes/header :: header}"></div>
+
+    <div class="container mt-4">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="mb-3">
+                    <label class="form-label">Filtrar por Curso:</label>
+                    <select class="form-select w-auto"
+                            onchange="window.location.href = '/alumnos?cursoId=' + this.value;">
+                        <option value="">-- Todos los Cursos --</option>
+                        <option th:each="curso : ${cursos}" th:value="${curso.id}" 
+                                th:text="${curso.nombre}"
+                                th:selected="${cursoSeleccionado != null and cursoSeleccionado.id == curso.id}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1>Listado de Alumnos</h1>
+                    <div class="btn-group">
+                        <a href="/alumnos/nuevo" th:href="@{/alumnos/nuevo}" class="btn btn-primary">
+                            <i class="bi bi-plus-circle"></i> Nuevo Alumno
+                        </a>
+                        <a href="/alumnos/importar" th:href="@{/alumnos/importar}" class="btn btn-success">
+                            <i class="bi bi-upload"></i> Importar CSV
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Apellidos</th>
+                                    <th>Email</th>
+                                    <th>Curso</th>
+                                    <th>Fecha de Nacimiento</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="alumno : ${alumnos}">
+                                    <td th:text="${alumno.nombre}"></td>
+                                    <td th:text="${alumno.apellidos}"></td>
+                                    <td th:text="${alumno.email}"></td>
+                                    <td th:text="${alumno.curso != null ? alumno.curso.nombre : 'Sin curso'}"></td>
+                                    <td th:text="${alumno.fechaNacimiento != null ? #dates.format(alumno.fechaNacimiento, 'dd/MM/yyyy') : '-'}"></td>
+                                    <td>
+                                        <a th:href="@{'/alumnos/editar/' + ${alumno.id}}" class="btn btn-sm btn-warning">
+                                            <i class="bi bi-pencil"></i> Editar
+                                        </a>
+                                        <a th:href="@{'/alumnos/eliminar/' + ${alumno.id}}" 
+                                           class="btn btn-sm btn-danger" 
+                                           onclick="return confirm('¿Seguro que deseas eliminar este alumno?');">
+                                            <i class="bi bi-trash"></i> Eliminar
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(alumnos)}">
+                                    <td colspan="6" class="text-center py-4 text-muted">No hay alumnos registrados</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{componentes/footer :: footer}"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
